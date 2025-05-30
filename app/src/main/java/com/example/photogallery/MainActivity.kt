@@ -14,6 +14,6 @@ class MainActivity : AppCompatActivity() {
             setContentView(it.root)
         }
 
-
+        
     }
 }
