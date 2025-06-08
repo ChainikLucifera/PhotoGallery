@@ -18,9 +18,10 @@
         android:hint="Enter..."
         android:padding="12dp"
         android:textColor="@color/black"
+        android:background="@drawable/edit_text_bg"
         android:textSize="16sp" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/Btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,6 +36,7 @@
         android:id="@+id/RV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:listitem="@layout/item_image"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
 </LinearLayout>
