@@ -4,8 +4,15 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.photogallery.api.OpenVerseApiService
+import com.example.photogallery.api.RetrofitClient
 import com.example.photogallery.databinding.ActivityMainBinding
+import com.example.photogallery.models.OpenVerseResponse
 import com.example.photogallery.models.PhotoResult
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,5 +42,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchImages(query: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = RetrofitClient.apiService.searchImages(query = query, page = 1)
+                withContext(Dispatchers.Main){
+                    if(response.isSuccessful){
+                        val apiResponse: OpenVerseResponse = response.body() as OpenVerseResponse
+                        apiResponse?.let {
+                            it.results?.let { results ->
+                                images.addAll(results)
+                                adapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                }
+            } catch (e:Exception){
+
+            } finally {
+
+            }
+        }
     }
 }

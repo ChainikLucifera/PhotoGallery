@@ -5,6 +5,6 @@ data class OpenVerseResponse(
     val pageCount: Int,
     val pageSize: Int,
     val resultCount: Int,
-    val results: List<PhotoResult>,
+    val results: List<PhotoResult>?,
     val warnings: List<Warning>
 )
