@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.photogallery.api.OpenVerseApiService
 import com.example.photogallery.api.RetrofitClient
 import com.example.photogallery.databinding.ActivityMainBinding
 import com.example.photogallery.models.OpenVerseResponse
@@ -34,19 +33,18 @@ class MainActivity : AppCompatActivity() {
             val query = binding.EditText.text.toString()
             if (query.isNotEmpty()) {
                 searchImages(query)
-            }
-            else{
+            } else {
                 Toast.makeText(this, "Enter search query", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun searchImages(query: String){
+    private fun searchImages(query: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = RetrofitClient.apiService.searchImages(query = query, page = 1)
-                withContext(Dispatchers.Main){
-                    if(response.isSuccessful){
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
                         val apiResponse: OpenVerseResponse = response.body() as OpenVerseResponse
                         apiResponse?.let {
                             it.results?.let { results ->
@@ -54,10 +52,15 @@ class MainActivity : AppCompatActivity() {
                                 adapter.notifyDataSetChanged()
                             }
                         }
+                    } else {
+                        Toast.makeText(this@MainActivity, "${response.code()} ${response.message()}",
+                            Toast.LENGTH_SHORT).show()
                     }
                 }
-            } catch (e:Exception){
-
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main){
+                    Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
+                }
             } finally {
 
             }
