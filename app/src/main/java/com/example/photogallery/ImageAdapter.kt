@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.example.photogallery.databinding.ItemImageBinding
-import com.example.photogallery.models.PhotoResult
+import com.example.photogallery.models.Result
 
-class ImageAdapter(private val images: List<PhotoResult>) :
+class ImageAdapter(private val images: List<Result>) :
     RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     class ImageViewHolder(view: View) : ViewHolder(view) {
