@@ -1,6 +1,7 @@
 package com.example.photogallery
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -28,12 +29,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
 
         binding.RV.layoutManager = GridLayoutManager(this, 2)
-        adapter = ImageAdapter(images)
+        adapter = ImageAdapter(images) { image ->
+            showImageDetails(image)
+        }
         binding.RV.adapter = adapter
 
         binding.RV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -131,5 +135,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun showImageDetails(image: Result){
+        binding.fragmentContainer.visibility = View.VISIBLE
+        val fragment = ImageDetailsFragment.newInstance()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

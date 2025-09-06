@@ -1,5 +1,6 @@
 package com.example.photogallery
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.photogallery.databinding.ItemImageBinding
 import com.example.photogallery.models.Result
 
-class ImageAdapter(private val images: List<Result>) :
+class ImageAdapter(private val images: List<Result>, private val onItemClick: (Result) -> Unit) :
     RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     class ImageViewHolder(view: View) : ViewHolder(view) {
@@ -35,7 +36,9 @@ class ImageAdapter(private val images: List<Result>) :
 
         holder.titleView.text = image.title
         holder.licenceView.text = "Licence: ${image.license}"
+
+        holder.itemView.setOnClickListener{
+            onItemClick(image)
+        }
     }
-
-
 }
