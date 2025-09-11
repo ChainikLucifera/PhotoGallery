@@ -1,5 +1,6 @@
 package com.example.photogallery
 
+import android.app.Activity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +40,7 @@ class ImageAdapter(private val images: List<Result>, private val onItemClick: (R
 
         holder.itemView.setOnClickListener{
             onItemClick(image)
+            it.hideKeyboard()
         }
     }
 }

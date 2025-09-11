@@ -1,10 +1,13 @@
 package com.example.photogallery
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.getSystemService
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photogallery.api.RetrofitClient
@@ -43,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         binding.RV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
+                if(dy > 100) hideKeyboard()
 
                 val layoutManager = recyclerView.layoutManager as GridLayoutManager
                 val visibleItemCount = layoutManager.childCount
@@ -63,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         binding.Btn.setOnClickListener {
             val query = binding.EditText.text.toString()
             if (query.isNotEmpty()) {
+                hideKeyboard()
                 currentPage = 1
                 searchImages(query)
             } else {
@@ -139,9 +144,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun showImageDetails(image: Result){
         binding.fragmentContainer.visibility = View.VISIBLE
-        val fragment = ImageDetailsFragment.newInstance()
+        val fragment = ImageDetailsFragment.newInstance(image)
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, fragment)
+            .setCustomAnimations(R.anim.fragment_slide_up, R.anim.fragment_slide_down
+                ,R.anim.fragment_slide_up, R.anim.fragment_slide_down)
+            .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
     }
