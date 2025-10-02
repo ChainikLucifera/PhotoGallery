@@ -28,10 +28,10 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                /*R.id.navigation_saved ->{
+                R.id.navigation_saved ->{
                     showSavedFragment()
                     true
-                }*/
+                }
 
                 else -> false
             }
@@ -44,11 +44,11 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    /*private fun showSavedFragment() {
+    private fun showSavedFragment() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_content_container, SavedFragment())
             .commit()
-    }*/
+    }
 
     fun showImageDetails(image: Result) {
         val fragment = ImageDetailsFragment.newInstance(image)
