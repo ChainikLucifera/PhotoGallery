@@ -16,8 +16,6 @@ class SavedFragment : Fragment() {
     ): View {
         binding = FragmentSavedBinding.inflate(inflater)
 
-
-
         return binding.root
     }
 }
