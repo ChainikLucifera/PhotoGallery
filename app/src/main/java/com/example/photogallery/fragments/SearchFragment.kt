@@ -1,4 +1,4 @@
-package com.example.photogallery
+package com.example.photogallery.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.photogallery.MainActivity
+import com.example.photogallery.adapters.ImageAdapter
 import com.example.photogallery.api.RetrofitClient
-import com.example.photogallery.databinding.ActivityMainBinding
 import com.example.photogallery.databinding.FragmentSearchBinding
+import com.example.photogallery.utils.extensions.hideKeyboard
 import com.example.photogallery.models.OpenVerseResponse
 import com.example.photogallery.models.Result
 import kotlinx.coroutines.CoroutineScope

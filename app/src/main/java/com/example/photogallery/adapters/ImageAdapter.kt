@@ -1,22 +1,21 @@
-package com.example.photogallery
+package com.example.photogallery.adapters
 
-import android.app.Activity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
+import com.example.photogallery.R
 import com.example.photogallery.databinding.ItemImageBinding
+import com.example.photogallery.utils.extensions.hideKeyboard
 import com.example.photogallery.models.Result
 
 class ImageAdapter(private val images: List<Result>, private val onItemClick: (Result) -> Unit) :
     RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
-    class ImageViewHolder(view: View) : ViewHolder(view) {
+    class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemImageBinding.bind(view)
 
         val imageView: ImageView = binding.imageView

@@ -1,4 +1,4 @@
-package com.example.photogallery
+package com.example.photogallery.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.photogallery.MainActivity
+import com.example.photogallery.adapters.ImageAdapter
 import com.example.photogallery.databinding.FragmentSavedBinding
 import com.example.photogallery.models.Result
 
