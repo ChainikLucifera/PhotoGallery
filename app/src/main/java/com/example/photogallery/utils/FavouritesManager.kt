@@ -1,5 +1,6 @@
 package com.example.photogallery.utils
 
+import android.util.Log
 import com.example.photogallery.models.Result
 
 object FavouritesManager {

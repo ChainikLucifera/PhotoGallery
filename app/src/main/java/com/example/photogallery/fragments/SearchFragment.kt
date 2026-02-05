@@ -1,6 +1,7 @@
 package com.example.photogallery.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.example.photogallery.databinding.FragmentSearchBinding
 import com.example.photogallery.utils.extensions.hideKeyboard
 import com.example.photogallery.models.OpenVerseResponse
 import com.example.photogallery.models.Result
+import com.example.photogallery.utils.FavouritesManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,6 +47,25 @@ class SearchFragment : Fragment() {
         binding.RV.layoutManager = GridLayoutManager(requireContext(), 2)
         adapter = ImageAdapter(images) { image ->
             showImageDetails(image)
+        }
+
+        adapter.onFavouriteClick = { image, isFavourite ->
+            if (isFavourite) {
+                Log.d("TEST", "isFavourite + $image")
+                FavouritesManager.addToFavourites(image)
+                Toast.makeText(
+                    requireContext(),
+                    "Added to favourites",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                FavouritesManager.removeFromFavourites(image.id)
+                Toast.makeText(
+                    requireContext(),
+                    "Removed from favourites",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
         binding.RV.adapter = adapter
 

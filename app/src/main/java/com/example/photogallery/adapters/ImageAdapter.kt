@@ -1,5 +1,6 @@
 package com.example.photogallery.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,10 @@ class ImageAdapter(
 
         holder.favouriteButton.setOnClickListener {
             val isFavourite = FavouritesManager.isFavorite(image.id)
+            Log.d("TEST",image.id )
+            Log.d("TEST",isFavourite.toString() )
             onFavouriteClick?.invoke(image, !isFavourite)
+            updateFavoriteButton(holder.favouriteButton, image.id)
         }
 
         holder.itemView.setOnClickListener {
@@ -57,12 +61,11 @@ class ImageAdapter(
         }
     }
 
-    private fun updateFavoriteButton(button: ImageButton, imageID: String){
+    private fun updateFavoriteButton(button: ImageButton, imageID: String) {
         val isFavourite = FavouritesManager.isFavorite(imageID)
-        val iconRes = if(isFavourite){
+        val iconRes = if (isFavourite) {
             android.R.drawable.btn_star_big_on
-        }
-        else {
+        } else {
             android.R.drawable.btn_star_big_off
         }
 
