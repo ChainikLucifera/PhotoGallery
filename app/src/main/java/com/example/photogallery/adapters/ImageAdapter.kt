@@ -16,7 +16,7 @@ import com.example.photogallery.utils.FavouritesManager
 import com.example.photogallery.utils.extensions.hideKeyboard
 
 class ImageAdapter(
-    private val images: List<Result>,
+    private var images: List<Result>,
     private val onItemClick: (Result) -> Unit
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
@@ -71,6 +71,9 @@ class ImageAdapter(
 
         button.setImageResource(iconRes)
     }
-
+    fun updateImages(newImages: List<Result>){
+        images = newImages
+        notifyDataSetChanged()
+    }
 
 }

@@ -49,8 +49,8 @@ class SearchFragment : Fragment() {
             showImageDetails(image)
         }
 
-        adapter.onFavouriteClick = { image, isFavourite ->
-            if (isFavourite) {
+        adapter.onFavouriteClick = { image, becameFavourite ->
+            if (becameFavourite) {
                 Log.d("TEST", "isFavourite + $image")
                 FavouritesManager.addToFavourites(image)
                 Toast.makeText(

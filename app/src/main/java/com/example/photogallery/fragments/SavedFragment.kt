@@ -4,18 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photogallery.MainActivity
 import com.example.photogallery.adapters.ImageAdapter
 import com.example.photogallery.databinding.FragmentSavedBinding
 import com.example.photogallery.models.Result
+import com.example.photogallery.utils.FavouritesManager
 
 
 class SavedFragment : Fragment() {
     private lateinit var binding: FragmentSavedBinding
     private lateinit var adapter: ImageAdapter
-    private val savedImages = mutableListOf<Result>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,55 +30,47 @@ class SavedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedImages.isEmpty()) {
-            savedImages.addAll(createTestImages())
-        }
         setupRecyclerView()
-        //updateEmptyState()
-
-    }
-
-    private fun createTestImages(): List<Result> {
-        return listOf(
-            Result(
-                id = "1",
-                title = "Test Image 1",
-                url = "https://karton33.ru/images/kristall/korob.png",
-                thumbnail = "null",
-                creator = "Test Creator",
-                creator_url = "null",
-                license = "CC0",
-                license_version = "1.0",
-                license_url = "null",
-                provider = "Test",
-                source = "Test Source",
-                tags = listOf(),
-                attribution = "null",
-                height = 500,
-                width = 500,
-                category = "null",
-                detail_url = "null",
-                fields_matched = listOf(),
-                filesize = 0,
-                filetype = "null",
-                foreign_landing_url = "null",
-                indexed_on = "null",
-                mature = true,
-                related_url = "null",
-                unstable__sensitivity = listOf()
-            )
-        )
+        loadFavourites()
     }
 
     private fun setupRecyclerView() {
         binding.SavedImagesRV.layoutManager = GridLayoutManager(requireContext(), 2)
-        adapter = ImageAdapter(savedImages) { image ->
+        adapter = ImageAdapter(emptyList()) { image ->
             showImageDetails(image)
         }
+
+        adapter.onFavouriteClick = { image, becameFavourite ->
+            if(!becameFavourite){
+                FavouritesManager.removeFromFavourites(image.id)
+                Toast.makeText(
+                    requireContext(),
+                    "Removed from favourites",
+                    Toast.LENGTH_SHORT
+                ).show()
+                loadFavourites()
+            }
+        }
+
         binding.SavedImagesRV.adapter = adapter
     }
 
-    private fun showImageDetails(image: Result){
+    private fun showImageDetails(image: Result) {
         (requireActivity() as MainActivity).showImageDetails(image)
+    }
+
+    private fun loadFavourites() {
+
+        val favourites = FavouritesManager.getFavourites()
+
+        if (favourites.isEmpty()) {
+            binding.EmptyStateText.visibility = View.VISIBLE
+            binding.SavedImagesRV.visibility = View.GONE
+        } else {
+            binding.EmptyStateText.visibility = View.GONE
+            binding.SavedImagesRV.visibility = View.VISIBLE
+
+            adapter.updateImages(favourites)
+        }
     }
 }
