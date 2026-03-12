@@ -27,4 +27,5 @@ interface FavouriteImageDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM `Favourite Images` WHERE id = :imageId)")
     suspend fun isFavourite(imageId: String) : Boolean
+
 }
