@@ -16,7 +16,6 @@ import com.example.photogallery.databinding.FragmentSearchBinding
 import com.example.photogallery.utils.extensions.hideKeyboard
 import com.example.photogallery.models.OpenVerseResponse
 import com.example.photogallery.models.Result
-import com.example.photogallery.utils.FavouritesManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

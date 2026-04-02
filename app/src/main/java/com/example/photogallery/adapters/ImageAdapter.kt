@@ -12,12 +12,12 @@ import com.bumptech.glide.Glide
 import com.example.photogallery.R
 import com.example.photogallery.databinding.ItemImageBinding
 import com.example.photogallery.models.Result
-import com.example.photogallery.utils.FavouritesManager
 import com.example.photogallery.utils.extensions.hideKeyboard
 
 class ImageAdapter(
     private var images: List<Result>,
-    private val onItemClick: (Result) -> Unit
+    private val onItemClick: (Result) -> Unit,
+    private var favouriteIDs: Set<String> = emptySet()
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     var onFavouriteClick: ((Result, Boolean) -> Unit)? = null
@@ -45,14 +45,18 @@ class ImageAdapter(
         holder.titleView.text = image.title
         holder.licenceView.text = "Licence: ${image.license}"
 
-        updateFavoriteButton(holder.favouriteButton, image.id)
+        val isFavorite = favouriteIDs.contains(image.id)
+
+        updateFavoriteButton(holder.favouriteButton, isFavorite)
 
         holder.favouriteButton.setOnClickListener {
-            val isFavourite = FavouritesManager.isFavorite(image.id)
-            Log.d("TEST",image.id )
-            Log.d("TEST",isFavourite.toString() )
-            onFavouriteClick?.invoke(image, !isFavourite)
-            updateFavoriteButton(holder.favouriteButton, image.id)
+            // Здесь надо второй раз isCurrentlyFavourite, если не работает
+
+            Log.d("TEST", image.id)
+            Log.d("TEST", isFavorite.toString())
+
+            onFavouriteClick?.invoke(image, !isFavorite)
+            updateFavoriteButton(holder.favouriteButton, !isFavorite)
         }
 
         holder.itemView.setOnClickListener {
@@ -61,8 +65,12 @@ class ImageAdapter(
         }
     }
 
-    private fun updateFavoriteButton(button: ImageButton, imageID: String) {
-        val isFavourite = FavouritesManager.isFavorite(imageID)
+    public fun updateFavoriteIDs(newFavoriteIDs: Set<String>) {
+        favouriteIDs = newFavoriteIDs
+        notifyDataSetChanged()
+    }
+
+    private fun updateFavoriteButton(button: ImageButton, isFavourite: Boolean) {
         val iconRes = if (isFavourite) {
             android.R.drawable.btn_star_big_on
         } else {
@@ -71,7 +79,8 @@ class ImageAdapter(
 
         button.setImageResource(iconRes)
     }
-    fun updateImages(newImages: List<Result>){
+
+    fun updateImages(newImages: List<Result>) {
         images = newImages
         notifyDataSetChanged()
     }

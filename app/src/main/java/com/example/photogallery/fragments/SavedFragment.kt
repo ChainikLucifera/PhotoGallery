@@ -11,7 +11,6 @@ import com.example.photogallery.MainActivity
 import com.example.photogallery.adapters.ImageAdapter
 import com.example.photogallery.databinding.FragmentSavedBinding
 import com.example.photogallery.models.Result
-import com.example.photogallery.utils.FavouritesManager
 
 
 class SavedFragment : Fragment() {

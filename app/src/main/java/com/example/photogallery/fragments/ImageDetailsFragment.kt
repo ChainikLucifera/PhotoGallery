@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.photogallery.databinding.FragmentImageDetailsBinding
 import com.example.photogallery.models.Result
-import com.example.photogallery.utils.FavouritesManager
 
 
 class ImageDetailsFragment : Fragment() {
